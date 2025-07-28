@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'loginpage.dart';
+import 'registerpage.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light background like in the image
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -43,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const Text(
-                        "Create Your Account",
+                        "Login to Your Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
@@ -51,28 +50,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: "First Name",
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: "Last Name",
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
                       TextField(
                         decoration: InputDecoration(
                           labelText: "Email Address",
@@ -99,33 +76,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        obscureText: _obscureConfirmPassword,
-                        decoration: InputDecoration(
-                          labelText: "Confirm Password",
-                          border: OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureConfirmPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureConfirmPassword =
-                                    !_obscureConfirmPassword;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Password must be at least 8 characters long and\ninclude uppercase, lowercase, numbers, and special characters.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12, color: Colors.black54),
-                      ),
                       const SizedBox(height: 20),
                       SizedBox(
                         height: 50,
@@ -138,10 +88,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Handle registration
+                            // Handle login
                           },
                           child: const Text(
-                            "Register",
+                            "Login",
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
@@ -153,18 +103,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account? "),
+                    const Text("Don't have an account? "),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
+                            builder: (context) => const RegisterPage(),
                           ),
                         );
                       },
                       child: const Text(
-                        "Login",
+                        "Register",
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontWeight: FontWeight.bold,

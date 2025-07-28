@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registerpage.dart';
+import 'loginpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,13 +16,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(), // Set LoginPage as home
+      home: const WelcomePage(), // Set LoginPage as home
     );
   }
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key}); // Add constructor for consistency
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key}); // Add constructor for consistency
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +38,16 @@ class LoginPage extends StatelessWidget {
               CircleAvatar(
                 radius: 150.0, // 60 * 1.7
                 backgroundColor: Colors.transparent,
-                child: Image.asset('assets/logo.png'), // Replace with your logo path
+                child: Image.asset(
+                  'assets/logo.png',
+                ), // Replace with your logo path
               ),
               SizedBox(height: 10), // 20 * 1.4
               // App Title
               Text(
-                'Test App',
+                'My AIO App',
                 style: TextStyle(
-                  fontSize: 55.6,  // 32 * 1.4
+                  fontSize: 55.6, // 32 * 1.4
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -63,14 +66,19 @@ class LoginPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()), // Navigate to RegisterPage
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterPage(),
+                    ), // Navigate to RegisterPage
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple[700],
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 112, vertical: 21), // 80 * 1.4 and 15 * 1.4
-                  textStyle: TextStyle(fontSize: 22.4),  // 16 * 1.4
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 112,
+                    vertical: 21,
+                  ), // 80 * 1.4 and 15 * 1.4
+                  textStyle: TextStyle(fontSize: 22.4), // 16 * 1.4
                 ),
                 child: Text('Register'),
               ),
@@ -78,11 +86,17 @@ class LoginPage extends StatelessWidget {
               // Login Button
               OutlinedButton(
                 onPressed: () {
-                  // Handle login
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Colors.blue),
-                  padding: EdgeInsets.symmetric(horizontal: 112, vertical: 21), // 80 * 1.4 and 15 * 1.4
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 112,
+                    vertical: 21,
+                  ), // 80 * 1.4 and 15 * 1.4
                   textStyle: TextStyle(fontSize: 22.4), // 16 * 1.4
                 ),
                 child: Text('Login', style: TextStyle(color: Colors.blue)),
@@ -109,4 +123,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-

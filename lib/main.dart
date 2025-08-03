@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'forgotpasswordpage.dart';
 import 'registerpage.dart';
 import 'loginpage.dart';
+import 'forgotpasswordpage.dart'; // Import the forgot password page
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const WelcomePage(), // Set LoginPage as home
+      home: const WelcomePage(),
     );
   }
 }
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key}); // Add constructor for consistency
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,41 +36,35 @@ class WelcomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Logo Section
               CircleAvatar(
-                radius: 150.0, // 60 * 1.7
+                radius: 150.0,
                 backgroundColor: Colors.transparent,
-                child: Image.asset(
-                  'assets/logo.png',
-                ), // Replace with your logo path
+                child: Image.asset('assets/logo.png'),
               ),
-              SizedBox(height: 10), // 20 * 1.4
-              // App Title
+              SizedBox(height: 10),
               Text(
                 'My AIO App',
                 style: TextStyle(
-                  fontSize: 55.6, // 32 * 1.4
+                  fontSize: 55.6,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 7), // 10 * 1.4
-              // Subtext
+              SizedBox(height: 7),
               Text(
                 'Your personal app.',
                 style: TextStyle(
-                  fontSize: 22.4, // 16 * 1.4
+                  fontSize: 22.4,
                   color: Colors.grey,
                 ),
               ),
-              SizedBox(height: 30), // 40 * 1.4
-              // Register Button
+              SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const RegisterPage(),
-                    ), // Navigate to RegisterPage
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -77,13 +73,12 @@ class WelcomePage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                     horizontal: 112,
                     vertical: 21,
-                  ), // 80 * 1.4 and 15 * 1.4
-                  textStyle: TextStyle(fontSize: 22.4), // 16 * 1.4
+                  ),
+                  textStyle: TextStyle(fontSize: 22.4),
                 ),
                 child: Text('Register'),
               ),
-              SizedBox(height: 28), // 20 * 1.4
-              // Login Button
+              SizedBox(height: 28),
               OutlinedButton(
                 onPressed: () {
                   Navigator.push(
@@ -96,23 +91,24 @@ class WelcomePage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                     horizontal: 112,
                     vertical: 21,
-                  ), // 80 * 1.4 and 15 * 1.4
-                  textStyle: TextStyle(fontSize: 22.4), // 16 * 1.4
+                  ),
+                  textStyle: TextStyle(fontSize: 22.4),
                 ),
                 child: Text('Login', style: TextStyle(color: Colors.blue)),
               ),
-              SizedBox(height: 28), // 20 * 1.4
-              // Forgot Password Text
+              SizedBox(height: 28),
               GestureDetector(
                 onTap: () {
-                  // Handle forgot password
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ForgotPasswordPage()), // Navigate to the ForgotPasswordPage
+                  );
                 },
                 child: Text(
                   'Forgot Password?',
                   style: TextStyle(
                     color: Colors.blue,
-                    fontSize: 19.6, // 14 * 1.4
-                    decoration: TextDecoration.underline,
+                    fontSize: 19.6,
                   ),
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'loginpage.dart';
 
 class EmailSentPage extends StatelessWidget {
+  static const String id = 'EmailSentPage';
   const EmailSentPage({super.key});
 
   @override

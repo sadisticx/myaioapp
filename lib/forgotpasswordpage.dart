@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'emailsentpage.dart'; // Make sure this matches the actual file name
+import 'emailsentpage.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  static const String id = 'ForgotPasswordPage';
+
   const ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true, // ✅ lets body shift when keyboard appears
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -15,9 +18,9 @@ class ForgotPasswordPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,12 +54,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EmailSentPage(),
-                      ),
-                    );
+                    Navigator.pushNamed(context, EmailSentPage.id);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,

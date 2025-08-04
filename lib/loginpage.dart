@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myaioapp/homepage.dart';
 import 'registerpage.dart';
-
+import 'homepage.dart';
 
 class LoginPage extends StatefulWidget {
+  static const String id = 'login_page';
+
   const LoginPage({super.key});
 
   @override
@@ -89,7 +92,7 @@ class LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Handle login
+                            Navigator.pushNamed(context, HomePage.id);
                           },
                           child: const Text(
                             "Login",
@@ -107,12 +110,7 @@ class LoginPageState extends State<LoginPage> {
                     const Text("Don't have an account? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, RegisterPage.id);
                       },
                       child: const Text(
                         "Register",

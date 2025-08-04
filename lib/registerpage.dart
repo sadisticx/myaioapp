@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'loginpage.dart';
 
 class RegisterPage extends StatefulWidget {
+  static const String id = 'RegisterPage';
+
   const RegisterPage({super.key});
 
   @override
@@ -15,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light background like in the image
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -25,7 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 Image.asset('assets/user.png', width: 150, height: 150),
                 const SizedBox(height: 50),
-                // Form Container
                 Container(
                   padding: const EdgeInsets.all(24.0),
                   decoration: BoxDecoration(
@@ -138,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Handle registration
+                            // Handle registration logic
                           },
                           child: const Text(
                             "Register",
@@ -156,12 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const Text("Already have an account? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                        );
+                        Navigator.pushReplacementNamed(context, LoginPage.id);
                       },
                       child: const Text(
                         "Login",

@@ -5,7 +5,7 @@ import 'registerpage.dart';
 import 'loginpage.dart';
 import 'welcomepage.dart';
 import 'emailsentpage.dart';
-
+import 'newdiaryentry.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         ForgotPasswordPage.id: (context) => const ForgotPasswordPage(),
         HomePage.id: (context) => const HomePage(),
         EmailSentPage.id: (context) => const EmailSentPage(),
+        NewDiaryEntryPage.id: (context) => const NewDiaryEntryPage(),
       },
     );
   }

@@ -24,7 +24,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Go Back')),
+      // Remove this appBar to avoid double bars
+      // appBar: AppBar(title: const Text('Go Back')),
+
       body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,

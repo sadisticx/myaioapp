@@ -1,18 +1,49 @@
 import 'package:flutter/material.dart';
 import 'newdiaryentry.dart';
+import 'diarydetailpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-class DiaryPage extends StatelessWidget {
+class DiaryPage extends StatefulWidget {
   static const String id = 'DiaryPage';
 
   const DiaryPage({super.key});
 
   @override
+  State<DiaryPage> createState() => _DiaryPageState();
+}
+
+class _DiaryPageState extends State<DiaryPage> {
+  List<Map<String, dynamic>> notes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotes();
+  }
+
+  Future<void> _loadNotes() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? notesJson = prefs.getString('notes');
+    if (notesJson != null) {
+      setState(() {
+        notes = List<Map<String, dynamic>>.from(jsonDecode(notesJson));
+      });
+    }
+  }
+
+  Future<void> _saveNotes() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('notes', jsonEncode(notes));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6F7), // Light gray page background
+      backgroundColor: const Color(0xFFF5F6F7),
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F6F7), // same light gray
+        backgroundColor: const Color(0xFFF5F6F7),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
@@ -52,40 +83,62 @@ class DiaryPage extends StatelessWidget {
 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-        child: ListView(
-          children: const [
-            DiaryEntryCard(
-              date: 'December 15, 2025',
-              time: '8:30 PM',
-              title: 'A Beautiful Day',
-              description:
-              'Today was one of those perfect days where everything seemed to fall into place. The morning started with a gentle breeze and the sound of birds chirping outside my window...',
-            ),
-            SizedBox(height: 12),
-            DiaryEntryCard(
-              date: 'December 14, 2025',
-              time: '10:15 PM',
-              title: 'Reflections on Growth',
-              description:
-              'I\'ve been thinking a lot about personal growth lately. It\'s fascinating how we change without even realizing it sometimes. Looking back at my entries from last year...',
-            ),
-            SizedBox(height: 12),
-            DiaryEntryCard(
-              date: 'December 13, 2025',
-              time: '7:45 PM',
-              title: 'Coffee Shop Chronicles',
-              description:
-              'Spent the afternoon at my favorite coffee shop downtown. There\'s something magical about the atmosphere there - the gentle hum of conversations, the aroma of freshly ground beans...',
-            ),
-          ],
+        child: ListView.builder(
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final note = notes[index];
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DiaryDetailPage(
+                          note: note,
+                          onDelete: () {
+                            setState(() {
+                              notes.removeAt(index);
+                            });
+                            _saveNotes();
+                          },
+                          onUpdate: (updatedNote) {
+                            setState(() {
+                              notes[index] = updatedNote;
+                            });
+                            _saveNotes();
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: DiaryEntryCard(
+                    date: note['date'],
+                    time: note['time'] ?? '',
+                    title: note['title'],
+                    description: note['content'],
+                  ),
+                ),
+                const SizedBox(height: 12),
+              ],
+            );
+          },
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
+        onPressed: () async {
+          final newNote = await Navigator.push(
+            context,
             MaterialPageRoute(builder: (context) => const NewDiaryEntryPage()),
           );
+
+          if (newNote != null) {
+            setState(() {
+              notes.insert(0, newNote);
+            });
+            _saveNotes();
+          }
         },
         backgroundColor: Colors.black87,
         child: const Icon(Icons.add, color: Colors.white),
@@ -111,9 +164,9 @@ class DiaryEntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white, // white background for card
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 2, // subtle shadow like in the screenshot
+      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -162,7 +215,7 @@ class DiaryEntryCard extends StatelessWidget {
             const Text(
               'Read more',
               style: TextStyle(
-                color: Color(0xFF666666), // dark gray #666
+                color: Color(0xFF666666),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),

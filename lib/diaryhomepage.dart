@@ -42,46 +42,69 @@ class _DiaryPageState extends State<DiaryPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6F7),
 
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F6F7),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Container(
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.black12),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFF5F6F7),
+          elevation: 0,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black87),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            children: [
-              const Icon(Icons.search, color: Colors.black45),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TextField(
-                  decoration: const InputDecoration(
-                    hintText: 'Search diary entries...',
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.only(bottom: 0),
-                    hintStyle: TextStyle(color: Colors.black38),
-                  ),
-                  style: const TextStyle(color: Colors.black87),
+          flexibleSpace: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 56, right: 56, top: 8),
+              // increased right padding to leave space for sort button
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: Colors.black45),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search diary entries...',
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.only(bottom: 0),
+                          hintStyle: TextStyle(color: Colors.black38),
+                        ),
+                        style: const TextStyle(color: Colors.black87),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Icon(Icons.filter_list, color: Colors.black45),
-            ],
+            ),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Center(
+                child: IconButton(
+                  icon: const Icon(Icons.filter_list, color: Colors.black87),
+                  onPressed: () {
+                    // handle sort/filter tap
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
 
-      body: Padding(
+
+
+        body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
         child: ListView.builder(
           itemCount: notes.length,

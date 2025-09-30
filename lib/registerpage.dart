@@ -148,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               _emailController.text,
                               _passwordController.text,
                             );
-                            if mounted
+                            if (mounted) cjontext.go('/');     
                             // Handle registration logic
                           },
                           child: const Text(

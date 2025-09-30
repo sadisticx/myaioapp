@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1308101519",
+    "project_id": "my-aio-app",
+    "storage_bucket": "my-aio-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1308101519:android:c83532197041da263ad9fa",
+        "android_client_info": {
+          "package_name": "com.myaioapp.myaioapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFmu_8M1eL_LDvH5S5eiIpq0jYXiENgYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

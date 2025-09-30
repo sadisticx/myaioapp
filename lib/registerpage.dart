@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myaioapp/auth_service.dart';
 import 'package:provider/provider.dart';
-import 'loginpage.dart';
-import 'auth_service.dart';
-import 'auth_gate.dart';
 
 class RegisterPage extends StatefulWidget {
-  static const String id = 'RegisterPage';
-
   const RegisterPage({super.key});
 
   @override
@@ -15,8 +11,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email Address",
                           border: OutlineInputBorder(),
@@ -86,6 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _passwordController,
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           labelText: "Password",
@@ -106,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _confirmPasswordController,
                         obscureText: _obscureConfirmPassword,
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
@@ -143,13 +153,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           onPressed: () async {
-                            final authService = Provider.of<AuthService(context, listen: false),
-                            await authService.registerWithEmailAndPassword(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                            if (mounted) cjontext.go('/');     
-                            // Handle registration logic
+                            if (_passwordController.text ==
+                                _confirmPasswordController.text) {
+                              final authService = Provider.of<AuthService>(
+                                  context,
+                                  listen: false);
+                              await authService
+                                  .registerWithEmailAndPassword(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                              if (mounted) context.go('/');
+                            }
                           },
                           child: const Text(
                             "Register",
@@ -167,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const Text("Already have an account? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, LoginPage.id);
+                        context.go('/login');
                       },
                       child: const Text(
                         "Login",

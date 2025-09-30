@@ -1,46 +1,66 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:myaioapp/homepage.dart';
-
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import 'auth_gate.dart';
-import 'auth_service.dart';
-import 'firebase_options.dart';
-
-import 'forgotpasswordpage.dart';
-import 'registerpage.dart';
-import 'loginpage.dart';
-import 'welcomepage.dart';
-import 'emailsentpage.dart';
-import 'newdiaryentry.dart';
+import 'package:myaioapp/auth_service.dart';
+import 'package:myaioapp/auth_gate.dart';
+import 'package:myaioapp/firebase_options.dart';
+import 'package:myaioapp/loginpage.dart';
+import 'package:myaioapp/registerpage.dart';
+import 'package:myaioapp/forgotpasswordpage.dart';
+import 'package:myaioapp/homepage.dart';
+import 'package:myaioapp/emailsentpage.dart';
+import 'package:myaioapp/newdiaryentry.dart';
+import 'package:myaioapp/welcomepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 final _router = GoRouter(
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) => const AuthGate(),
-      routes: [
-        GoRoute(path: 'home', builder: (context, state) => const HomePage()),
-      ],
     ),
     GoRoute(
-      path: '/login_page',
+      path: '/welcome',
+      builder: (context, state) => const WelcomePage(),
+    ),
+    GoRoute(
+      path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
-      path: '/register_page',
+      path: '/register',
       builder: (context, state) => const RegisterPage(),
     ),
-    GoRoute(path: '/forgot_password'),
+    GoRoute(
+      path: '/forgot-password',
+      builder: (context, state) => const ForgotPasswordPage(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/email-sent',
+      builder: (context, state) => const EmailSentPage(),
+    ),
+    GoRoute(
+      path: '/new-diary-entry',
+      builder: (context, state) => const NewDiaryEntryPage(),
+    ),
   ],
 );
 
@@ -49,22 +69,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WelcomePage(),
+    return MaterialApp.router(
+      routerConfig: _router,
       title: 'My AIO App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      initialRoute: WelcomePage.id, // Set the initial route
-      routes: {
-        WelcomePage.id: (context) => const WelcomePage(),
-        RegisterPage.id: (context) => const RegisterPage(),
-        LoginPage.id: (context) => LoginPage(),
-        ForgotPasswordPage.id: (context) => const ForgotPasswordPage(),
-        HomePage.id: (context) => const HomePage(),
-        EmailSentPage.id: (context) => const EmailSentPage(),
-        NewDiaryEntryPage.id: (context) => const NewDiaryEntryPage(),
-      },
     );
   }
 }

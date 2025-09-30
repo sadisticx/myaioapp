@@ -1,17 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:myaioapp/homepage.dart';
-import 'registerpage.dart';
-
 import 'package:go_router/go_router.dart';
+import 'package:myaioapp/auth_service.dart';
 import 'package:provider/provider.dart';
 
-import 'auth_service.dart';
-
 class LoginPage extends StatefulWidget {
-  static const String id = 'login_page';
-
   const LoginPage({super.key});
 
   @override
@@ -23,6 +15,13 @@ class LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,12 +102,14 @@ class LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           onPressed: () async {
-                            final authService = Provider.of<AuthService>(context, listen: false), 
+                            final authService = Provider.of<AuthService>(
+                                context,
+                                listen: false);
                             await authService.signInWithEmailAndPassword(
-                                _emailController.text,
-                                _passwordController.text,
+                              _emailController.text,
+                              _passwordController.text,
                             );
-                            //Navigator.pushNamed(context, HomePage.id);
+                            if (mounted) context.go('/');
                           },
                           child: const Text(
                             "Login",
@@ -126,7 +127,7 @@ class LoginPageState extends State<LoginPage> {
                     const Text("Don't have an account? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, RegisterPage.id);
+                        context.go('/register');
                       },
                       child: const Text(
                         "Register",

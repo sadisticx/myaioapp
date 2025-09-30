@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'registerpage.dart';
-import 'loginpage.dart';
-import 'forgotpasswordpage.dart';
+import 'package:go_router/go_router.dart';
 
 class WelcomePage extends StatelessWidget {
-  static const String id = 'WelcomePage';
   const WelcomePage({super.key});
 
   @override
@@ -39,7 +36,7 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RegisterPage.id);
+                  context.go('/register');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple[700],
@@ -55,7 +52,7 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 28),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, LoginPage.id);
+                  context.go('/login');
                 },
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.blue),
@@ -73,7 +70,7 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 28),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, ForgotPasswordPage.id);
+                  context.go('/forgot-password');
                 },
                 child: const Text(
                   'Forgot Password?',

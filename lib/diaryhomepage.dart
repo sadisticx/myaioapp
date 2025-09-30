@@ -177,12 +177,12 @@ class DiaryEntryCard extends StatelessWidget {
   final String description;
 
   const DiaryEntryCard({
-    Key? key,
+    super.key,
     required this.date,
     required this.time,
     required this.title,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

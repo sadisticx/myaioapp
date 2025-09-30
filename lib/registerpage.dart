@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myaioapp/auth_service.dart';
+import 'package:provider/provider.dart';
 import 'loginpage.dart';
+import 'auth_service.dart';
+import 'auth_gate.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String id = 'RegisterPage';
@@ -138,7 +142,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            final authService = Provider.of<AuthService(context, listen: false),
+                            await authService.registerWithEmailAndPassword(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                            if mounted
                             // Handle registration logic
                           },
                           child: const Text(

@@ -1,7 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:myaioapp/homepage.dart';
 import 'registerpage.dart';
 
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_page';
@@ -13,6 +19,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   bool _obscurePassword = true;
 
   @override
@@ -55,6 +64,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Email Address",
                           border: OutlineInputBorder(),
@@ -63,6 +73,7 @@ class LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 16),
                       TextField(
                         obscureText: _obscurePassword,
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           labelText: "Password",
                           border: OutlineInputBorder(),
@@ -91,8 +102,13 @@ class LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, HomePage.id);
+                          onPressed: () async {
+                            final authService = Provider.of<AuthService>(context, listen: false), 
+                            await authService.signInWithEmailAndPassword(
+                                _emailController.text,
+                                _passwordController.text,
+                            );
+                            //Navigator.pushNamed(context, HomePage.id);
                           },
                           child: const Text(
                             "Login",

@@ -153,17 +153,32 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           onPressed: () async {
-                            if (_passwordController.text ==
+                            if (_passwordController.text !=
                                 _confirmPasswordController.text) {
-                              final authService = Provider.of<AuthService>(
-                                  context,
-                                  listen: false);
-                              await authService
-                                  .registerWithEmailAndPassword(
-                                _emailController.text,
-                                _passwordController.text,
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Passwords do not match.'),
+                                ),
                               );
+                              return;
+                            }
+                            final authService = Provider.of<AuthService>(
+                                context,
+                                listen: false);
+                            final user = await authService
+                                .registerWithEmailAndPassword(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                            if (user != null) {
                               if (mounted) context.go('/');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Registration failed. Please try again.'),
+                                ),
+                              );
                             }
                           },
                           child: const Text(

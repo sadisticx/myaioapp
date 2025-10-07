@@ -105,11 +105,19 @@ class LoginPageState extends State<LoginPage> {
                             final authService = Provider.of<AuthService>(
                                 context,
                                 listen: false);
-                            await authService.signInWithEmailAndPassword(
+                            final user = await authService.signInWithEmailAndPassword(
                               _emailController.text,
                               _passwordController.text,
                             );
-                            if (mounted) context.go('/');
+                            if (user != null) {
+                              if (mounted) context.go('/');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Login failed. Please check your credentials.'),
+                                ),
+                              );
+                            }
                           },
                           child: const Text(
                             "Login",

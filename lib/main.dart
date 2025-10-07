@@ -15,7 +15,9 @@ import 'package:myaioapp/welcomepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [
@@ -27,7 +29,7 @@ void main() async {
 }
 
 final _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/welcome',
   routes: [
     GoRoute(
       path: '/',

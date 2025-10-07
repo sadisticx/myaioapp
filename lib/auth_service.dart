@@ -31,6 +31,17 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print(e.toString());
+      // You can handle errors more gracefully here, e.g., by re-throwing a custom exception
+      // and catching it in the UI to show a specific error message.
+      rethrow; 
+    }
+  }
+
   Future<void> signOut() async {
     await _auth.signOut();
   }
